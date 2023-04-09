@@ -1,4 +1,4 @@
-program P1E5;
+Program P1E5;
 
 Uses math;
 
