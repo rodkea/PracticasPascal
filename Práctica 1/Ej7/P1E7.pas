@@ -177,3 +177,5 @@ Program P1E7;
         writeLn('Dos cartas de distinto numero en el mismo mazo y del mismo palo? ',  DosCartasDistintoNumeroIgualMazoIgualPalo(carta1, carta2));
         writeLn('Es la primera carta mayor que la segunda? ',  PrimeraCartaMayorSegunda(carta1, carta2));
     end.
+
+    
