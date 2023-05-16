@@ -4,13 +4,13 @@ program E2P6;
     MAX_SIZE = 10;
     MAX_NAME_SIZE = 5;
   type 
-    st20 = string[MAX_NAME_SIZE];
+    st5 = string[MAX_NAME_SIZE];
     TMat = array[1..MAX_SIZE,1..MAX_SIZE] of real;
-    TVNbre = array[1..MAX_SIZE] of st20 ;
-    
+    TVNbre = array[1..MAX_SIZE] of st5 ;    
   var 
     Notas : TMat;
     Nbre : TVNbre;
+    Promocionados : TVNbre;
     N, M : byte;
     c : char;
   procedure LeerNotas(var Notas : TMat; var Nbre : TVNbre;  var N, M : byte);
@@ -45,17 +45,57 @@ program E2P6;
       i, j : byte;
       aprobo : boolean;
     Begin
+      writeln('Aprobaron todos los parciales:');
       for i := 1 to N do 
         Begin
           aprobo := True;
           for j := 1 to M  do 
             Begin
-              aprobo := aprobo and ( Notas[i, j] >= 7);
+              aprobo := aprobo and ( Notas[i, j] >= 5);
             End;
           if aprobo then
             writeln(Nbre[i])
-        End;
+        End;    
+        writeln();      
+    End;
+
+    procedure EstadoAlumno(Nbre : TVNbre; Notas : TMat; N, M : byte; var Promocionados : TVNbre);
+
+    var 
+      i, j, k : byte;
+      
+      sumaNotas : real;
+
+    Begin
+      k := 0;
+      for i := 1 to N do
+        Begin
+          sumaNotas := 0;
+          for j := 1 to M do
+            Begin
+              sumaNotas := sumaNotas + Notas[i, j];  
+            End;
+            
+          if (sumaNotas / M) >= 7 then
+            Begin            
+            k := k + 1;
+            Promocionados[k] := Nbre[i];
+            writeln(Nbre[i],': Promocionado');                                            
+            End
+          else
+            Begin
+              if ( sumaNotas / M) >= 5 then
+                Begin
+                  writeln(Nbre[i],': Aprobado');  
+                End
+              else
+                Begin
+                  writeln(Nbre[i],': Desaprobado');  
+                End;
+            End;
           
+        End;
+
     End;
 
   Begin
@@ -63,4 +103,5 @@ program E2P6;
     M := 0;
     LeerNotas(Notas, Nbre, N, M);
     MostrarAprobados(Nbre, Notas, N, M);
+    EstadoAlumno(Nbre, Notas, N, M, Promocionados);
   End.
